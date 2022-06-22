@@ -1,22 +1,21 @@
 import sys
 from collections import deque
-
-dx = [1,-1,0,0]
-dy = [0,0,1,-1]
-
-n,m = map(int,sys.stdin.readline().split())
 graph = []
 
+n,m =map(int,sys.stdin.readline().split())
+
 for _ in range(n):
-    lst = list(map(int,sys.stdin.readline().rstrip()))
+    lst = list(map(int,input()))
     graph.append(lst)
 
-visited = [[False]*(m) for _ in range(n)]
+visited = [[False]*m for _ in range(n)]
 
+dx=[1,-1,0,0]
+dy=[0,0,1,-1]
 
 def bfs(x,y):
     q = deque()
-    q.append((x,y))
+    q.append([x,y])
     visited[x][y]=True
 
     while q:
@@ -29,15 +28,7 @@ def bfs(x,y):
                 if not visited[nx][ny]:
                     q.append([nx,ny])
                     visited[nx][ny]=True
-                    graph[nx][ny] = graph[x][y] + 1
-
-for i in range(n):
-    for j in range(m):
-        if graph[i][j]==1 and visited[i][j]==False:
-            bfs(i,j)
-
+                    graph[nx][ny] = graph[x][y]+1
+bfs(0,0)
 print(graph[-1][-1])
-
-
-
 
