@@ -1,17 +1,18 @@
 import sys
 from collections import deque
-n = int(input())
-q = deque(enumerate(map(int, input().split())))
-answer=[]
 
+n = int(sys.stdin.readline())
+q = deque(enumerate(map(int,sys.stdin.readline().split())))
+answer = []
 while q:
-    k,v = q.popleft()
-    answer.append(k+1)
-    if v>0:
-        q.rotate(-v+1)
-    elif v<0:
-        q.rotate(-v)
-print(answer)
+    val,mov = q.popleft()
+    answer.append(val+1)
 
+    if mov>0:
+        q.rotate(-mov+1)
+    elif mov<0:
+        q.rotate(-mov)
 
-print(' '.join(map(str, answer)))
+for v in answer:
+    print(v,end=' ')
+
