@@ -2,38 +2,43 @@ import sys
 from collections import deque
 
 n,m,start = map(int,sys.stdin.readline().split())
-sys.setrecursionlimit(10**6)
+
+visited = [True]*(n+1)
 graph = [[] for _ in range(n+1)]
+
 for _ in range(m):
     a,b = map(int,sys.stdin.readline().split())
     graph[a].append(b)
     graph[b].append(a)
 
-visited = [False]*(n+1)
+for node in graph:
+    node.sort()
 
-
-for lst in graph:
-    lst.sort()
-
-
-def dfs(start):
-    visited[start]=True
-    print(start,end=' ')
-    for val in graph[start]:
-        if not visited[val]:
-            dfs(val)
 
 def bfs(start):
-    q = deque([start])
-    visited[start]=False
+    q = deque()
+    q.append(start)
+    visited[start]=True
+
     while q:
         val = q.popleft()
         print(val,end=' ')
-        for v in graph[val]:
-            if visited[v]:
-                visited[v]=False
-                q.append(v)
+        for nxt in graph[val]:
+            if not visited[nxt]:
+                q.append(nxt)
+                visited[nxt]=True
+
+def dfs(start):
+    print(start, end=' ')
+    visited[start]=False
+    for nxt in graph[start]:
+        if visited[nxt]:
+            dfs(nxt)
+
 
 dfs(start)
 print()
 bfs(start)
+
+
+
